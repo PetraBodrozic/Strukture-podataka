@@ -4,7 +4,7 @@
 #include <string.h>
 
 // Definicija strukture osobe
-// Svaka osoba ima ime, prezime i datum roðenja (dan, mjesec, godina)
+// Svaka osoba ima ime, prezime i datum roðenja (godina)
 // te pokazivaè na sljedeæu osobu u listi
 typedef struct Person {
     char name[20];
@@ -213,4 +213,5 @@ int find_in_list(Person* head, char* surname) {
     }
     return 1; // osoba nije pronaðena
 }
+
 
