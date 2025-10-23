@@ -4,20 +4,20 @@
 #include <string.h>
 
 // Definicija strukture osobe
-// Svaka osoba ima ime, prezime i datum roðenja (dan, mjesec, godina)
-// te pokazivaè na sljedeæu osobu u listi
+// Svaka osoba ima ime, prezime i datum roÃ°enja (dan, mjesec, godina)
+// te pokazivaÃ¨ na sljedeÃ¦u osobu u listi
 typedef struct Person {
     char name[20];
     char surname[20];
-    int day, month, year;
+    int  year;
     struct Person* next;
 } Person;
 
 // Deklaracije funkcija koje se koriste u programu
-Person* add_in_front(Person*);               // dodaje novi element na poèetak liste
-Person* delete_from_list(Person*, char*);    // briše element po prezimenu
+Person* add_in_front(Person*);               // dodaje novi element na poÃ¨etak liste
+Person* delete_from_list(Person*, char*);    // briÅ¡e element po prezimenu
 Person* add_to_end(Person*);                 // dodaje novi element na kraj liste
-Person* create();                            // kreira novi èvor (osobu)
+Person* create();                            // kreira novi Ã¨vor (osobu)
 int find_in_list(Person*, char*);            // pronalazi osobu po prezimenu
 int print_list(Person*);                     // ispisuje cijelu listu
 
@@ -25,7 +25,7 @@ int main() {
     int choice;
     int status = 0;
     char sur[20];
-    Person* head = NULL;  // pokazivaè na prvi element liste (inicijalno prazan)
+    Person* head = NULL;  // pokazivaÃ¨ na prvi element liste (inicijalno prazan)
 
     do {
         // Izbornik
@@ -40,7 +40,7 @@ int main() {
         switch (choice)
         {
         case 1:
-            // Dodavanje novog elementa na poèetak
+            // Dodavanje novog elementa na poÃ¨etak
             head = add_in_front(head);
             break;
 
@@ -80,7 +80,7 @@ int main() {
         }
     } while (choice != 6);
 
-    // Oslobaðanje zauzete memorije
+    // OslobaÃ°anje zauzete memorije
     Person* temp;
     while (head != NULL) {
         temp = head;
@@ -103,14 +103,14 @@ Person* create() {
     scanf("%19s", new_person->name);
     printf("Unesite prezime: ");
     scanf("%19s", new_person->surname);
-    printf("Unesite datum rodenja (dd mm yyyy): ");
-    scanf("%d %d %d", &new_person->day, &new_person->month, &new_person->year);
+    printf("Unesite godinu rodenja (yyyy): ");
+    scanf("%d", &new_person->year);
 
-    new_person->next = NULL; // novi èvor još nije povezan u listu
+    new_person->next = NULL; // novi Ã¨vor joÅ¡ nije povezan u listu
     return new_person;
 }
 
-// Dodavanje osobe na poèetak liste
+// Dodavanje osobe na poÃ¨etak liste
 Person* add_in_front(Person* head) {
     Person* person_to_add = create();
     if (person_to_add == NULL) {
@@ -118,8 +118,8 @@ Person* add_in_front(Person* head) {
         return head;
     }
 
-    person_to_add->next = head;  // novi èvor pokazuje na stari prvi
-    return person_to_add;        // vraæa se novi pokazivaè na poèetak
+    person_to_add->next = head;  // novi Ã¨vor pokazuje na stari prvi
+    return person_to_add;        // vraÃ¦a se novi pokazivaÃ¨ na poÃ¨etak
 }
 
 // Dodavanje osobe na kraj liste
@@ -135,13 +135,13 @@ Person* add_to_end(Person* head) {
         return person_to_add;
     }
 
-    // Inaèe idemo do kraja liste
+    // InaÃ¨e idemo do kraja liste
     Person* temp = head;
     while (temp->next != NULL) {
         temp = temp->next;
     }
 
-    temp->next = person_to_add;  // dodaj novi èvor na kraj
+    temp->next = person_to_add;  // dodaj novi Ã¨vor na kraj
     return head;
 }
 
@@ -156,10 +156,10 @@ int print_list(Person* head) {
     printf("%-20s %-20s %-20s\n", "IME", "PREZIME", "DATUM RODENJA");
     printf("-----------------------------------------------------------------------\n");
 
-    // Ispis svakog elementa dok ne doðemo do kraja
+    // Ispis svakog elementa dok ne doÃ°emo do kraja
     while (temp != NULL) {
-        printf("%-20s %-20s %02d.%02d.%04d\n",
-            temp->name, temp->surname, temp->day, temp->month, temp->year);
+        printf("%-20s %-20s %04d\n",
+            temp->name, temp->surname, temp->year);
         temp = temp->next;
     }
 
@@ -171,19 +171,19 @@ Person* delete_from_list(Person* head, char* surname) {
     Person* temp = head;
     Person* previous = NULL;
 
-    // Tražimo osobu s danim prezimenom
+    // TraÅ¾imo osobu s danim prezimenom
     while (temp != NULL && strcmp(temp->surname, surname) != 0) {
         previous = temp;
         temp = temp->next;
     }
 
-    // Ako osoba nije pronaðena
+    // Ako osoba nije pronaÃ°ena
     if (temp == NULL) {
         printf("Greska! Ne postoji osoba s tim prezimenom!\n");
         return head;
     }
 
-    // Ako se briše prvi element
+    // Ako se briÅ¡e prvi element
     if (previous == NULL) {
         head = temp->next;
     }
@@ -191,7 +191,7 @@ Person* delete_from_list(Person* head, char* surname) {
         previous->next = temp->next;
     }
 
-    free(temp);  // oslobaða memoriju obrisanog èvora
+    free(temp);  // oslobaÃ°a memoriju obrisanog Ã¨vora
     return head;
 }
 
@@ -205,11 +205,12 @@ int find_in_list(Person* head, char* surname) {
 
     while (temp != NULL) {
         if (strcmp(temp->surname, surname) == 0) {
-            printf("Pronadena osoba: %s %s, rodena %02d.%02d.%04d\n",
-                temp->name, temp->surname, temp->day, temp->month, temp->year);
+            printf("Pronadena osoba: %s %s, rodena %04d\n",
+                temp->name, temp->surname, temp->year);
             return 0;
         }
         temp = temp->next;
     }
-    return 1; // osoba nije pronaðena
+    return 1; // osoba nije pronaÃ°ena
 }
+
